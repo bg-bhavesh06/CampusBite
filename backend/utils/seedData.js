@@ -264,22 +264,22 @@ const seedData = async () => {
     const stallCount = await Stall.countDocuments();
     if (stallCount === 0) {
       await Stall.insertMany(stallsData);
-      console.log('15 Food Stalls seeded successfully!');
+      console.log('✅ 15 Food Stalls seeded successfully!');
     }
 
     const adminExists = await User.findOne({ isAdmin: true });
     if (!adminExists) {
-      const adminMobile = process.env.ADMIN_MOBILE || '9999999999';
-      const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+      const bcrypt = require('bcryptjs');
+      const hashedPassword = await bcrypt.hash('admin123', 12);
       await User.create({
         name: 'Admin',
-        mobile: adminMobile,
-        password: adminPassword,
+        mobile: '9999999999',
+        password: hashedPassword,
         hostel: 'Admin Block',
         roomNumber: '001',
         isAdmin: true
       });
-      console.log(` Admin user created! Mobile: ${adminMobile}`);
+      console.log('✅ Admin user created! Mobile: 9999999999, Password: admin123');
     }
   } catch (err) {
     console.log('Seed error:', err.message);
