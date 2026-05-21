@@ -269,17 +269,17 @@ const seedData = async () => {
 
     const adminExists = await User.findOne({ isAdmin: true });
     if (!adminExists) {
-      const bcrypt = require('bcryptjs');
-      const hashedPassword = await bcrypt.hash('admin123', 12);
+      const adminMobile = process.env.ADMIN_MOBILE || '9999999999';
+      const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
       await User.create({
         name: 'Admin',
-        mobile: '9999999999',
-        password: hashedPassword,
+        mobile: adminMobile,
+        password: adminPassword,
         hostel: 'Admin Block',
         roomNumber: '001',
         isAdmin: true
       });
-      console.log(' Admin user created! Mobile: 9999999999, Password: admin123');
+      console.log(` Admin user created! Mobile: ${adminMobile}`);
     }
   } catch (err) {
     console.log('Seed error:', err.message);
