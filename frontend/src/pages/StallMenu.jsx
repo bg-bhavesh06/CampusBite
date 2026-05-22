@@ -3,11 +3,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Plus, Minus, Star, Clock, ShoppingCart } from 'lucide-react';
 import axios from 'axios';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 
 export default function StallMenu() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const { add, setQty, items } = useCart();
   const [stall, setStall] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -25,7 +27,15 @@ export default function StallMenu() {
   const cartTotal = items.reduce((s, i) => s + i.qty, 0);
   const getCI = itemId => items.find(i => i.itemId === itemId);
 
-  const handleAdd = item => { add(item, stall); toast.success(`${item.name} added!`, { icon:'🛒' }); };
+  const handleAdd = item => { 
+    if (!user) {
+      toast('Please sign in to order', { icon: '🔒' });
+      navigate('/login');
+      return;
+    }
+    add(item, stall); 
+    toast.success(`${item.name} added!`, { icon:'🛒' }); 
+  };
 
   return (
     <div className="page">

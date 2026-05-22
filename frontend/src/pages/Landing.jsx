@@ -21,6 +21,7 @@ export default function Landing() {
           </div>
           <div style={{ display:'flex', alignItems:'center', gap:8 }}>
             <Link to="/about" style={{ ...S, padding:'6px 14px', color:'#6b7280', fontSize:14 }}>About</Link>
+            <Link to="/home" style={{ ...S, padding:'6px 14px', color:'#6b7280', fontSize:14 }}>Browse Stalls</Link>
             <Link to="/login" style={{ ...S, padding:'6px 14px', color:'#6b7280', fontSize:14 }}>Login</Link>
             <Link to="/register" className="btn-orange" style={{ padding:'8px 18px' }}>Sign Up Free</Link>
           </div>
@@ -42,8 +43,8 @@ export default function Landing() {
             Order from 15+ campus stalls before 5PM. Get food delivered to your hostel between 7–9PM.
           </p>
           <div style={{ display:'flex', gap:12, justifyContent:'center', flexWrap:'wrap', marginBottom:48 }}>
-            <Link to="/register" className="btn-orange" style={{ fontSize:16, padding:'13px 32px', boxShadow:'0 6px 20px rgba(249,115,22,0.3)' }}>
-              Order Now <ArrowRight size={18} />
+            <Link to="/home" className="btn-orange" style={{ fontSize:16, padding:'13px 32px', boxShadow:'0 6px 20px rgba(249,115,22,0.3)' }}>
+              Browse Stalls <ArrowRight size={18} />
             </Link>
             <Link to="/login" className="btn-white" style={{ fontSize:16, padding:'13px 32px' }}>Sign In</Link>
           </div>

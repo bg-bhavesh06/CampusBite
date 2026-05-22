@@ -29,7 +29,7 @@ export default function Home() {
         <div style={{ maxWidth:1100, margin:'0 auto' }}>
           <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', gap:16, marginBottom:16, flexWrap:'wrap' }}>
             <div>
-              <p style={{ color:'#f97316', fontSize:13, fontWeight:500, marginBottom:3 }}>Hello, {user?.name?.split(' ')[0]} 👋</p>
+              <p style={{ color:'#f97316', fontSize:13, fontWeight:500, marginBottom:3 }}>{user ? `Hello, ${user.name?.split(' ')[0]} 👋` : 'Hello, Guest 👋'}</p>
               <h1 style={{ fontFamily:'Syne', fontSize:'clamp(20px,3.5vw,28px)', fontWeight:800, color:'#111827', marginBottom:10 }}>
                 What are you craving today?
               </h1>
