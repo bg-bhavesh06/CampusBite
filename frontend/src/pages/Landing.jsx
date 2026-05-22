@@ -4,7 +4,7 @@ import { ArrowRight, Clock, MapPin, Zap, Shield, Utensils } from 'lucide-react';
 
 export default function Landing() {
   const { user } = useAuth();
-  if (user) return <Navigate to="/home" />;
+  if (user) return <Navigate to={user.isAdmin ? '/admin' : '/home'} />;
 
   const S = { textDecoration:'none' };
 

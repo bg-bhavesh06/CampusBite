@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { Search, Star, Clock, Lock, ShoppingCart, ChevronRight } from 'lucide-react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
@@ -9,6 +9,7 @@ const CATS = ['All','Pizza','Indian','Street Food','Desserts','Healthy','Chinese
 
 export default function Home() {
   const { user } = useAuth();
+  if (user?.isAdmin) return <Navigate to="/admin" />;
   const { totalQty, total } = useCart();
   const [stalls, setStalls] = useState([]);
   const [loading, setLoading] = useState(true);

@@ -9,7 +9,8 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const [role, setRole] = useState('user');
+  const { login, logout } = useAuth();
   const navigate = useNavigate();
 
   const submit = async e => {
@@ -17,6 +18,20 @@ export default function Login() {
     setLoading(true);
     try {
       const u = await login(mobile, password);
+      
+      if (role === 'admin' && !u.isAdmin) {
+        logout();
+        toast.error('You do not have Owner privileges');
+        setLoading(false);
+        return;
+      }
+      if (role === 'user' && u.isAdmin) {
+        logout();
+        toast.error('Please use the Owner Login tab');
+        setLoading(false);
+        return;
+      }
+
       toast.success(`Welcome, ${u.name.split(' ')[0]}! 👋`);
       navigate(u.isAdmin ? '/admin' : '/home');
     } catch (err) {
@@ -34,11 +49,36 @@ export default function Login() {
             </div>
             <span style={{ fontFamily: 'Syne', fontWeight: 800, fontSize: 20, color: '#1a1a1a' }}>campus<span style={{ color: '#f97316' }}>bite</span></span>
           </Link>
-          <h1 style={{ fontFamily: 'Syne', fontSize: 26, fontWeight: 800, color: '#111827', marginBottom: 6 }}>Welcome back</h1>
-          <p style={{ color: '#9ca3af', fontSize: 14 }}>Sign in to continue ordering</p>
+          <h1 style={{ fontFamily: 'Syne', fontSize: 26, fontWeight: 800, color: '#111827', marginBottom: 6 }}>Welcome Back</h1>
+          <p style={{ color: '#9ca3af', fontSize: 14 }}>
+            {role === 'admin' ? 'Sign in to manage your stalls and orders.' : 'Sign in to order food and manage your cart.'}
+          </p>
         </div>
 
         <div className="card" style={{ padding: 28 }}>
+          <div style={{ display: 'flex', background: '#f3f4f6', borderRadius: 12, padding: 4, marginBottom: 24 }}>
+            <button
+              type="button"
+              onClick={() => setRole('user')}
+              style={{
+                flex: 1, padding: '10px 0', border: 'none', borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s',
+                background: role === 'user' ? '#fff' : 'transparent', color: role === 'user' ? '#111827' : '#6b7280', boxShadow: role === 'user' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'
+              }}
+            >
+              User Login
+            </button>
+            <button
+              type="button"
+              onClick={() => setRole('admin')}
+              style={{
+                flex: 1, padding: '10px 0', border: 'none', borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s',
+                background: role === 'admin' ? '#fff' : 'transparent', color: role === 'admin' ? '#111827' : '#6b7280', boxShadow: role === 'admin' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'
+              }}
+            >
+              Owner Login
+            </button>
+          </div>
+
           <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <div>
               <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#374151', marginBottom: 6 }}>Mobile Number</label>

@@ -46,6 +46,8 @@ function Sidebar({ onClose }) {
 
 export default function AdminLayout({ children, title }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { logout } = useAuth();
+  const navigate = useNavigate();
   return (
     <div style={{ minHeight:'100vh', background:'#f5f5f5', display:'flex', fontFamily:'Inter' }}>
       {/* Desktop */}
@@ -65,12 +67,20 @@ export default function AdminLayout({ children, title }) {
       {/* Main content */}
       <div style={{ flex:1, marginLeft:0 }} className="admin-main">
         <style>{`@media(min-width:1024px){.admin-main{margin-left:230px!important}}`}</style>
-        <div style={{ position:'sticky', top:0, zIndex:20, background:'#fff', borderBottom:'1px solid #e5e7eb', height:54, display:'flex', alignItems:'center', padding:'0 20px', gap:12 }}>
-          <button onClick={() => setSidebarOpen(true)} style={{ width:32, height:32, display:'flex', alignItems:'center', justifyContent:'center', background:'#f9fafb', border:'1px solid #e5e7eb', borderRadius:8, cursor:'pointer' }} className="lg-hide">
-            <Menu size={15} color="#374151" />
+        <div style={{ position:'sticky', top:0, zIndex:20, background:'#fff', borderBottom:'1px solid #e5e7eb', height:54, display:'flex', alignItems:'center', justifyContent:'space-between', padding:'0 20px' }}>
+          <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+            <button onClick={() => setSidebarOpen(true)} style={{ width:32, height:32, display:'flex', alignItems:'center', justifyContent:'center', background:'#f9fafb', border:'1px solid #e5e7eb', borderRadius:8, cursor:'pointer' }} className="lg-hide">
+              <Menu size={15} color="#374151" />
+            </button>
+            <style>{`@media(min-width:1024px){.lg-hide{display:none!important}}`}</style>
+            <h1 style={{ fontFamily:'Syne', fontSize:17, fontWeight:700, color:'#111827' }}>{title}</h1>
+          </div>
+          <button onClick={() => { logout(); navigate('/'); }} style={{
+            width: 34, height: 34, display: 'flex', alignItems: 'center', justifyContent: 'center',
+            background: '#fff5f5', border: '1px solid #fecaca', borderRadius: 8, cursor: 'pointer'
+          }} title="Logout">
+            <LogOut size={14} color="#ef4444" />
           </button>
-          <style>{`@media(min-width:1024px){.lg-hide{display:none!important}}`}</style>
-          <h1 style={{ fontFamily:'Syne', fontSize:17, fontWeight:700, color:'#111827' }}>{title}</h1>
         </div>
         <div style={{ padding:20 }}>{children}</div>
       </div>
