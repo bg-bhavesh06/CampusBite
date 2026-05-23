@@ -37,7 +37,7 @@ export default function Home() {
               <div style={{ display:'flex', alignItems:'center', gap:10, flexWrap:'wrap' }}>
                 <span className={open() ? 'badge-green' : 'badge-red'}>
                   <span style={{ width:5, height:5, borderRadius:'50%', background: open() ? '#16a34a' : '#dc2626', display:'inline-block' }} />
-                  {open() ? '☀️ Orders Open · 9AM–5PM' : 'Orders Closed · Opens 9AM'}
+                  {open() ? '☀️ Orders Open · 8AM–5PM' : 'Orders Closed · Opens 8AM'}
                 </span>
                 <span style={{ color:'#9ca3af', fontSize:12 }}>· Delivery 7–9PM</span>
               </div>
